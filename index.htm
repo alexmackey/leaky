@@ -1,0 +1,25 @@
+﻿<!doctype html>
+
+<h1>Leaky example</h1>
+
+<script src="leaky.js"></script>
+
+<script>
+
+//create some bad global variables
+badVar1="blah";
+badVar2="blah2";
+
+//this one is fine
+goodGlobal="I am fine";
+another7="I am fine";
+
+var leakyOptions={
+		filterEntries: true,
+		allowedObjs: ['leaky','leakyOptions','event','goodGlobal'],
+        allowedRegex: ['another[0-9]'],
+};
+
+console.dir(leaky.getGlobals(leakyOptions));
+
+</script>
