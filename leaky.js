@@ -27,32 +27,27 @@ var leaky =
         iframe.src = 'about:blank';
         iframe = iframe.contentWindow || iframe.contentDocument;
 
-        function isKnownGlobal(value) {
+        function isAllowedGlobal(value) {
 
-            var matchFound = false;
-
-            if (options.allowedObjs.indexOf(value) != -1) {
+            if (options.allowedObjs.indexOf(value) !== -1) {
                 return true;
             }
 
-            options.allowedRegex.some(function(expression) {
+            return options.allowedRegex.some(function(expression) {
 
                 var regex = new RegExp(expression);
 
                 if (value.match(regex)) {
-                    matchFound = true;
-                    return;
+                    return true;
                 }
 
             });
-
-            return matchFound;
         }
 
         for (globalObj in window) {
 			if (typeof iframe[globalObj] === "undefined") {
 
-                if (isKnownGlobal(globalObj.toString()) === false || options.filterEntries === false ) {
+                if (isAllowedGlobal(globalObj.toString()) === false || options.filterEntries === false ) {
                     windowObjs[globalObj] = {
                         'Type': typeof window[globalObj],
                         'Value': window[globalObj]
