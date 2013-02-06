@@ -15,7 +15,9 @@ goodGlobal="I am fine";
 another7="I am fine";
 
 var leakyOptions={
-		filterEntries: true
+		filterEntries: true,
+		allowedObjs: ['leaky','leakyOptions','event','goodGlobal'],
+        allowedRegex: ['another[0-9]'],
 };
 
 console.dir(leaky.getGlobals(leakyOptions));
