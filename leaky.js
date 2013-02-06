@@ -14,10 +14,10 @@ var leaky =
 
     var getGlobals = function(options) {
     
-		options.allowedObjs || [];
-		options.allowedRegex || [];
-		
-	
+		options=options || {filterEntries:false}
+		options.allowedObjs = options.allowedObjs || [];
+		options.allowedRegex = options.allowedRegex || [];
+			
         var windowObjs = {},
             iframe = document.createElement('iframe'),
             globalObj;
@@ -50,7 +50,6 @@ var leaky =
         }
 
         for (globalObj in window) {
-
 			if (typeof iframe[globalObj] === "undefined") {
 
                 if (isKnownGlobal(globalObj.toString()) === false || options.filterEntries === false ) {
@@ -59,9 +58,7 @@ var leaky =
                         'Value': window[globalObj]
                     };
                 }
-
             }
-
         }
 
         return windowObjs;
